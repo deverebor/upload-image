@@ -6,6 +6,7 @@ import {
   ModalBody,
   Image,
   Link,
+  useColorMode,
 } from '@chakra-ui/react';
 
 interface ModalViewImageProps {
@@ -19,5 +20,47 @@ export function ModalViewImage({
   onClose,
   imgUrl,
 }: ModalViewImageProps): JSX.Element {
-  // TODO MODAL WITH IMAGE AND EXTERNAL LINK
+  const { colorMode } = useColorMode();
+
+  return (
+    <>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        motionPreset="slideInBottom"
+      >
+        <ModalOverlay />
+        <ModalContent
+          bg={colorMode === "dark" ? "modal.background-dark" : "modal.background-light"}
+          color={colorMode === "dark" ? "modal.color-dark" : "modal.color-light"}
+          borderRadius="none"
+          maxWidth="fit-content"
+        >
+          <ModalBody
+            padding="0"
+          >
+            <Image
+              maxWidth="75vw"
+              maxHeight="75vh"
+              src={imgUrl}
+            />
+          </ModalBody>
+
+          <ModalFooter
+            paddingX="2.5"
+            paddingY="2"
+          >
+            <Link
+              href={imgUrl}
+              isExternal
+              marginRight="auto"
+            >
+              Abrir original
+            </Link>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  )
 }
