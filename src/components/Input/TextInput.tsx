@@ -7,7 +7,6 @@ import {
   Input as ChakraInput,
   InputProps as ChakraInputProps,
   Tooltip,
-  useColorMode,
 } from '@chakra-ui/react';
 import { FiAlertCircle } from 'react-icons/fi';
 
@@ -20,8 +19,6 @@ const TextInputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   { name, error = null, ...rest },
   ref
 ) => {
-  const { colorMode } = useColorMode();
-
   return (
     <FormControl
       display="flex"
@@ -30,36 +27,27 @@ const TextInputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       isInvalid={!!error}
     >
       <ChakraInput
-        borderRadius="0.25rem"
         aria-label={name}
         name={name}
         ref={ref}
-        bgColor={colorMode === "dark" ? "inputs.background-dark" : "inputs.background-light"}
-        color={colorMode === "dark" ? "inputs.color-dark" : "inputs.color-light"}
-        errorBorderColor={colorMode === "dark" ? "errors.dark" : "errors.light"}
+        borderColor="transparent"
+        bgColor="pGray.800"
+        color="pGray.50"
         _placeholder={{
-          color: colorMode === "dark" ? "inputs.placeholder-dark" : "inputs.placeholder-light",
-          fontSize: "1rem",
+          color: 'pGray.200',
         }}
         _hover={{
-          borderColor: colorMode === "dark" ? "button.border-dark" : "button.border-light"
+          borderColor: 'orange.400',
         }}
+        py={6}
         pr={8}
         {...rest}
       />
 
       {!!error && (
-        <Tooltip
-          label={error.message}
-          bg={colorMode === "dark" ? "errors.dark" : "errors.light"}
-        >
+        <Tooltip label={error.message} bg="red.500">
           <FormErrorMessage ml={-6} mt={0} zIndex="tooltip">
-            <Icon
-              as={FiAlertCircle}
-              color={colorMode === "dark" ? "errors.dark" : "errors.light"}
-              w={4}
-              h={4}
-            />
+            <Icon as={FiAlertCircle} color="red.500" w={4} h={4} />
           </FormErrorMessage>
         </Tooltip>
       )}
